@@ -3,54 +3,52 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Captcha Verification - {{ins}}</title>
   <link rel="icon" href="favicon.ico" />
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f3f3f3;
-      color: #333;
-      margin: 0;
-      padding: 0;
+      background-color: #f4f6f9;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
-    .container {
-      background: white;
-      border-radius: 8px;
+    .box {
+      background: #fff;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
+      width: 90%;
       max-width: 400px;
-      width: 100%;
     }
 
     h2 {
+      color: #0078D4;
       margin-bottom: 30px;
-      color: #0078d4;
     }
 
-    .captcha-box {
+    .captcha-display {
       font-size: 36px;
-      letter-spacing: 8px;
       font-weight: bold;
-      background-color: #e8f0fe;
-      border: 2px solid #0078d4;
-      border-radius: 5px;
-      padding: 15px;
+      letter-spacing: 12px;
+      background: linear-gradient(135deg, #e3efff, #d0e3ff);
+      border: 2px dashed #0078d4;
+      padding: 20px;
       margin-bottom: 20px;
+      border-radius: 6px;
       user-select: none;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
+      font-size: 16px;
       margin-bottom: 20px;
-      font-size: 18px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
@@ -58,7 +56,7 @@
     button {
       background-color: #0078d4;
       color: white;
-      padding: 12px 25px;
+      padding: 12px 24px;
       font-size: 16px;
       border: none;
       border-radius: 5px;
@@ -71,48 +69,47 @@
 
     .error {
       color: red;
-      margin-top: 10px;
+      margin-top: 15px;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="box">
     <h2>SharePoint CAPTCHA Verification</h2>
-    <div class="captcha-box" id="captchaText">ABX9D</div>
-    <input type="text" id="userInput" placeholder="Enter the characters above" />
+    <div id="captchaText" class="captcha-display">AB12C</div>
+    <input type="text" id="userInput" placeholder="Enter CAPTCHA" />
     <button onclick="verifyCaptcha()">Verify</button>
-    <div class="error" id="errorMsg"></div>
+    <div id="errorMsg" class="error"></div>
   </div>
 
   <script>
-    // Simple random captcha generator
     function generateCaptcha(length = 5) {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let captcha = '';
+      let result = '';
       for (let i = 0; i < length; i++) {
-        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
       }
-      return captcha;
+      return result;
     }
 
     let currentCaptcha = generateCaptcha();
-    document.getElementById('captchaText').textContent = currentCaptcha;
+    document.getElementById("captchaText").textContent = currentCaptcha;
 
     function verifyCaptcha() {
-      const userInput = document.getElementById('userInput').value.toUpperCase();
-      const errorMsg = document.getElementById('errorMsg');
+      const userInput = document.getElementById("userInput").value.toUpperCase();
+      const errorMsg = document.getElementById("errorMsg");
 
       if (userInput === currentCaptcha) {
         errorMsg.style.color = 'green';
-        errorMsg.textContent = 'Captcha verified successfully!';
-        // Redirect or unlock form here
+        errorMsg.textContent = "Captcha verified successfully!";
+        // You can add further logic here
       } else {
         errorMsg.style.color = 'red';
-        errorMsg.textContent = 'Incorrect captcha. Please try again.';
+        errorMsg.textContent = "Incorrect captcha. Please try again.";
         currentCaptcha = generateCaptcha();
-        document.getElementById('captchaText').textContent = currentCaptcha;
-        document.getElementById('userInput').value = '';
+        document.getElementById("captchaText").textContent = currentCaptcha;
+        document.getElementById("userInput").value = "";
       }
     }
   </script>
